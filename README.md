@@ -1,6 +1,6 @@
 # AddressBook
 
-<div align="center">Armazene e manipule facilmente multiplos endereços.</div>
+<div align="center">Armazene e manipule facilmente múltiplos endereços.</div>
 
 ## Screenshots: 
 ![Index](https://user-images.githubusercontent.com/108197477/192399597-27a9280d-79d1-44ee-b448-4953499c3961.png)
