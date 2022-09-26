@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="eng">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastrar Endereço</title>
+
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <header><h1>CEP data</h1></header>
+    <form>
+      <h1 class="title">Cadastrar Endereço</h1>
+      <main class="container">
+        <div class="row">
+          <div class="inputbox">
+            <input type="text" id="apelido" required />
+            <label for="apelido">Apelido</label>
+          </div>
+          <div class="inputbox">
+            <input type="text" id="cep" required />
+            <label for="cep">CEP</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="inputbox">
+            <input type="text" id="endereco" required />
+            <label for="endereco">Endereço</label>
+          </div>
+          <div class="inputbox">
+            <input type="text" id="numero" required />
+            <label for="numero">Número</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="inputbox">
+            <input type="text" id="bairro" required />
+            <label for="bairro">Bairro</label>
+          </div>
+          <div class="inputbox">
+            <input type="text" id="cidade" required />
+            <label for="cidade">Cidade</label>
+          </div>
+          <div class="inputbox">
+            <input type="text" id="estado" required />
+            <label for="estado">Estado</label>
+          </div>
+        </div>
+        <div class="row"><button id="salvar">Salvar</button></div>
+      </main>
+    </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/cep.js" type="module" defer></script>
+    <script>
+      const preencherFormulario = endereco => {
+        document.getElementById('apelido').value = endereco.apelido;
+        document.getElementById('cep').value = endereco.cep;
+        document.getElementById('endereco').value = endereco.endereco;
+        document.getElementById('numero').value = endereco.numero;
+        document.getElementById('bairro').value = endereco.bairro;
+        document.getElementById('cidade').value = endereco.cidade;
+        document.getElementById('estado').value = endereco.estado;
+      };
+
+      window.addEventListener('load', async () => {
+        const urlString = new URL(window.location.href);
+        const id = urlString.searchParams.get('id');
+        const isEditing = !!parseInt(urlString.searchParams.get('isEditing'));
+
+        const title = document.querySelector('.title');
+
+        if (isEditing) {
+          title.innerText = 'Editar Endereço';
+        }
+
+        if (!id) return;
+
+        const endereco = await getOneAddress(id);
+        preencherFormulario(endereco);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,100 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Endereços Cadastrados</title>
+    <link rel="stylesheet" href="../css/addresses.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="enderecos-cadastrados">
+      <h1>Endereços Cadastrados</h1>
+      <ul class="address-list"></ul>
+    </div>
+    <script src="../js/api.js"></script>
+    <script>
+      const showAddresses = addressesArray => {
+        const addressList = document.querySelector('.address-list');
+
+        addressesArray.sort((a, b) => a.apelido.localeCompare(b.apelido));
+
+        addressList.innerHTML = '';
+
+        addressesArray.forEach(item => {
+          const addressContainer = document.createElement('div');
+          const leftContainer = document.createElement('div');
+          const rightContainer = document.createElement('div');
+          const apelido = document.createElement('p');
+          const cep = document.createElement('p');
+          const endereco = document.createElement('p');
+          const numero = document.createElement('p');
+          const bairro = document.createElement('p');
+          const cidade = document.createElement('p');
+          const estado = document.createElement('p');
+
+          const deleteButton = document.createElement('button');
+          const editButton = document.createElement('button');
+
+          apelido.innerText = `Apelido: ${item.apelido}`;
+          cep.innerText = `CEP: ${item.cep}`;
+          endereco.innerText = `Endereço: ${item.endereco}`;
+          numero.innerText = `Número: ${item.numero}`;
+          bairro.innerText = `Bairro: ${item.bairro}`;
+          cidade.innerText = `Cidade: ${item.cidade}`;
+          estado.innerText = `Estado: ${item.estado}`;
+
+          addressContainer.classList.add('address-container');
+          leftContainer.classList.add('left-container');
+          rightContainer.classList.add('right-container');
+
+          deleteButton.classList.add('delete-button');
+          editButton.classList.add('edit-button');
+
+          deleteButton.innerText = 'Delete';
+          editButton.innerHTML =
+            'Edit<img src="../img/create-outline.svg" alt="icone do edit button">';
+
+          deleteButton.addEventListener('click', async () => {
+            try {
+              const { success } = await deleteAddress(item._id);
+
+              if (!success) throw Error();
+
+              alert('Endereço deletado com sucesso!');
+              await loadAddresses();
+            } catch (error) {
+              alert('Ops, houve algum problema ao tentar deletar o endereço');
+            }
+          });
+
+          editButton.addEventListener('click', async () => {
+            const id = item._id;
+            window.location.href = `/pages/register.html?id=${id}&isEditing=1`;
+          });
+
+          leftContainer.append(apelido, cep, endereco, numero, bairro, cidade, estado);
+          rightContainer.append(deleteButton, editButton);
+          addressContainer.append(leftContainer, rightContainer);
+          addressList.appendChild(addressContainer);
+        });
+      };
+
+      const loadAddresses = async () => {
+        const allAddresses = await getAddresses();
+        showAddresses(allAddresses);
+      };
+
+      window.addEventListener('load', () => {
+        loadAddresses();
+      });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
+  </body>
+</html>
