@@ -92,6 +92,6 @@ btn.addEventListener('click', async e => {
     isEditing ? alert('Endereço alterado com sucesso!') : alert('Endereço cadastrado com sucesso!');
   } catch (error) {
     console.log(error);
-    alert('Ops! Houve algum problema ao tentar cadastrar o endereço');
+    isEditing ? alert('Ops! Houve algum problema ao tentar cadastrar o endereço'): alert('Ops! Houve algum problema ao tentar editar o endereço!')
   }
 });
