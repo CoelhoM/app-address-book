@@ -1,4 +1,3 @@
-const { db } = require('../models/address');
 const Address = require('../models/address');
 
 const controller = {};
@@ -27,6 +26,7 @@ controller.save_address_POST = async (req, res) => {
     const newAddress = await Address.create(req.body);
     return res.status(200).send(newAddress);
   } catch (error) {
+    console.log(error);
     res.status(400).send({ message: 'Erro ao criar objeto' });
   }
 };

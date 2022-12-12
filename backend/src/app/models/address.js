@@ -9,7 +9,6 @@ const AddressSchema = new Schema({
   cep: {
     type: String,
     required: true,
-    unique: true,
   },
   endereco: {
     type: String,
