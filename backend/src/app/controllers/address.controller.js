@@ -32,8 +32,8 @@ controller.save_address_POST = async (req, res) => {
 };
 
 controller.delete_address_DELETE = async (req, res) => {
-  const id = req.params.id;
   try {
+    const id = req.params.id;
     await Address.findByIdAndDelete(id);
     res.status(200).send({ message: 'Endereço deletado com sucesso!' });
   } catch (error) {
@@ -41,10 +41,9 @@ controller.delete_address_DELETE = async (req, res) => {
   }
 };
 
-controller.update_adress_PATCH = async (req, res) => {
-  const id = req.params.id;
-
+controller.update_address_PATCH = async (req, res) => {
   try {
+    const id = req.params.id;
     await Address.findByIdAndUpdate(id, req.body);
     res.status(200).send({ message: 'Endereço alterado com sucesso!' });
   } catch (error) {
